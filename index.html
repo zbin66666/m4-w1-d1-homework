@@ -4,7 +4,12 @@
         <title> Password Validator</title>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
-       
+        <style>
+            .has-required{
+                text-decoration: line-through;
+                color:#689868;
+            }
+        </style>
     </head>
 
     <body>
@@ -30,6 +35,32 @@
                 </div>
             </div>
         </div>
+        <script>
+            Vue.component('password-helper', {
+                data(){
+                    return {
+                        password:'',
+                        has_minimum_length: false,
+                        has_number:false,
+                        has_lowercase:false,
+                        has_uppercase:false,
+                        has_special:false,
+                    }
+                },
+                watch:{
+                    password(){
+                        this.has_minimum_length = (this.password.length > 8);
+                        this.has_number  =  /\d/.test(this.password);
+                        this.has_lowercase = /[a-z]/.test(this.password);
+                        this.has_uppercase = /[A-Z]/.test(this.password);
+                        this.has_speical = /[!@#\$%\^\&*|)\(+=._-)]/.test(this.password);             
+                    }
+                },
+            });
+            var app = new Vue({
+                el: '#app'
+            });
+        </script>
     </body>
 </html>
 
